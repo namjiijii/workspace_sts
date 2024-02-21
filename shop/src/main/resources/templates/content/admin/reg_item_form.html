@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/admin_layout}" >
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴때 같이 실행되는 css -->
+    <!-- <link rel="stylesheet" href="/"> -->
+</th:block>
+
+<th:block layout:fragment="contentFragment">
+    <!-- html 코드 작성 -->
+    <div class="row">
+        <div class="col-6">
+            <form class="row g-3" action="/admin/regItem" method="post" enctype="multipart/form-data">
+                <div class="col-md-12">
+                    <label for="exampleFormControlInput1" class="form-label">BOOK NAME</label>
+                    <input type="text" class="form-control" name="itemName" id="exampleFormControlInput1" placeholder="상품명을 입력하세요 (최대 50자 이내)">
+                </div>
+                <div class="col-md-12">
+                    <label for="exampleFormControlInput1" class="form-label">PRICE</label>
+                    <input type="text" class="form-control" name="itemPrice" id="exampleFormControlInput1" placeholder="금액을 입력하세요">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputState" class="form-label">CATEGORY</label>
+                    <select id="inputState" class="form-select" name="cateCode">
+                        <option th:each="category : ${categoryList}" th:value="${category.cateCode}">[[${category.cateName}]]</option>
+                        
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label for="exampleFormControlTextarea1" class="form-label">BOOK INTRODUCTION</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="itemIntro"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupFile01">UPLOAD</label>
+                    <input type="file" class="form-control" id="inputGroupFile01" name="mainImg">
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupFile01">UPLOAD</label>
+                    <input type="file" class="form-control" id="inputGroupFile01" name="subImgs" multiple>
+                </div>
+                <div class="col-md-5">
+                    <button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z"/>
+                      </svg> Register</button>
+                </div>
+              </form>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="content_js">
+    <!-- html 파일이 열릴때 같이 실행되는 js -->
+    <!-- <script src="/"></script> -->
+</th:block>
+</html>
+
+  

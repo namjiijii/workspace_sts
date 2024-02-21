@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/user_layout}" >
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴때 같이 실행하는 css-->
+    <!-- <link rel="stylesheet" href="/"> -->
+</th:block>
+
+<th:block layout:fragment="contentFragment">
+    <style>
+        
+    </style>
+
+
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="row mb-3">
+                <div class="offset-2 col-4">
+                    <th:block th:each="img : ${detail.imgList}">
+                        <th:block th:if="${img.isMain == 'Y'}">
+                            <img th:src="@{'/upload/' + ${img.attachedFileName}}" class="rounded mx-auto" style="width: 250px; height: 300px;" >
+                        </th:block>
+                    </th:block>
+                </div>
+                <div class="col-4">
+                    <div class="row mb-3 mt-4">
+                        <div class="col-12">[[${detail.itemName}]]</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">[[${#numbers.formatCurrency(detail.itemPrice)}]]</div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-4">STOCK</div>
+                        <div class="col-8">
+                            <form action="/buy/buys" method="post" id="insert-buy-form">
+                                <input type="hidden" name="totalPrice" th:value="${detail.itemCode}">
+                                <input type="hidden" name="itemCode" th:value="${detail.itemCode}">
+                                <input name="buyCnt" type="number" min="1" max="100" class="form-control" value="1"  th:oninput="setTotalPrice(this, [[${detail.itemPrice}]])">
+                            </form>
+                        </div>
+                    </div> 
+                    <div class="row mb-3">
+                        <div class="col"> TOTAL &nbsp;<span class="total-price-span">[[${detail.itemPrice}]]</span>원</div>
+                    </div>
+                    <div class="row">
+                        <div class="col d-grid">
+                            <input type="button" class="btn btn-outline-success" value="CART" th:onclick="insertCart([[${detail.itemCode}]],[[${session.loginInfo}]])">
+                        </div>
+                        <div class="col d-grid">
+                            <input type="button" class="btn btn-outline-success" value="BUY" onclick="insertBuy()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col" style="text-align: center;">
+                    [[${detail.itemIntro}]]
+                </div>
+            </div>
+
+            <th:block th:each="img : ${detail.imgList}">
+                <th:block th:if="${img.isMain == 'N'}">
+                    <div class="row mb-3">
+                        <div class="col" style="display: flex; justify-content: center;">
+                            <img th:src="@{'/upload/' + ${img.attachedFileName}}" class="rounded mx-auto" style="float: center;" >
+                        </div>
+                    </div>
+                </th:block>
+            </th:block>
+        </div>  
+    </div>
+
+
+
+
+
+
+        
+</th:block>
+
+<th:block layout:fragment="content_js">
+    <!--html 파일이 열릴때 같이 실행하는 js-->
+    <script src="/js/content/item/item_detail.js"></script>
+</th:block>
+</html>

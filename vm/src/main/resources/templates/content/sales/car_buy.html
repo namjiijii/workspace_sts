@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/car_layout}" >
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴때 같이 실행하는 css-->
+    <!-- <link rel="stylesheet" href="/"> -->
+</th:block>
+
+<th:block layout:fragment="contentFragment">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <form action="/sales/insertSalesInfo" method="post">
+                <table class="table">
+                    <tr>
+                        <td>구매자명</td>
+                        <td colspan="3"><input type="text" name="buyerName"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            색상
+                        </td>
+                        <td >
+                            <select name="color">
+                                <option value="블랙" >블랙</option>
+                                <option value="화이트" >화이트</option>
+                                <option value="실버" >실버</option>
+                                <option value="레드">레드</option>
+                            </select>
+                        </td>
+                        <td>모델 </td>
+                        <td>
+                            <select  name="carCode">
+                                <option th:each="car : ${carList}" th:value="${car.carCode}">[[${car.carName}]]</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>연락처</td>
+                        <td><input type="text" name="buyerTel"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-end" colspan="4">
+                            <input type="submit" value="등록">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="content_js">
+    <!--html 파일이 열릴때 같이 실행하는 js-->
+    <!-- <script src="/"></script> -->
+</th:block>
+</html>

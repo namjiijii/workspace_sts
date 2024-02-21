@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="headerFragment">
+    <div class="row">
+        <!-- text start(좌측 정렬) end(우측 정렬) -->
+        <div class="col text-end">
+            <th:block th:if="${session.loginInfo == null}">
+                <span class="pointer-span" onclick="loginForm()"> LOGIN</span>
+                <span class="pointer-span" data-bs-toggle="modal" data-bs-target="#join-modal"> JOIN </span>
+            </th:block>
+            <th:block th:if="${session.loginInfo != null}">
+                [[${session.loginInfo.memberId}]]님 반갑습니다.
+                <th:block th:if="${session.loginInfo.memberRoll == 'ADMIN'}">
+                    <span class="pointer-span" onclick="location.href='/admin/adminHistory';"> ADMIN </span>
+                </th:block>
+                <span class="pointer-span" onclick="location.href='/buy/history?page=history'">MY PAGE</span>
+                <span class="pointer-span" onclick="logout()">LOGOUT </span>
+            </th:block>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <H1 class="main-title pointer-span" onclick="location.href='/item/list'">BOOK SHOP</H1>
+        </div>
+    </div>
+
+     <!-- 회원가입 modal -->
+    <div class="modal fade" id="join-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    
+                    <form class="row g-3" id="join-form" action="/member/insertMember" method="post">
+                        <div class="col-8">
+                            <label for="" class="form-label">ID</label>
+                            <input type="text" class="form-control" id="memberId" name="memberId">
+                        </div>
+                        <div class="col-12">
+                            <label for="" class="form-label">PASSWORD</label>
+                            <input type="password" class="form-control" id="memberPw1" name="memberPw">
+                        </div>
+                        <div class="col-12">
+                            <label for="" class="form-label">CONFIRM PASSWORD</label>
+                            <input type="password" class="form-control" id="memberPw2">
+                        </div>
+                        <div class="col-12">
+                            <label for="" class="form-label">NAME</label>
+                            <input type="text" class="form-control" id="" name="memberName">
+                        </div>
+                        <div class="col-4">
+                            <label for="" class="form-label">TEL</label>
+                            <select id="" class="form-select" name="memberTel">
+                                <option value="010" selected>010</option>
+                                <option value="011">011</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label for="" class="form-label">&nbsp;</label>
+                            <input type="text" class="form-control" id="" name="memberTel">
+                        </div>
+                        <div class="col-4">
+                            <label for="" class="form-label">&nbsp;</label>
+                            <input type="text" class="form-control" id="" name="memberTel">
+                        </div>
+                        <div class="col-6">
+                            <label for="" class="form-label">EMAIL</label>
+                            <input type="text" class="form-control" id="" name="memberEmail">
+                        </div>
+                        <div class="col-6">
+                            <label for="" class="form-label">&nbsp;</label>
+                            <select id="" class="form-select" name="memberEmail">
+                                <option value="@ gmail.com" selected>@gmail.com</option>
+                                <option value="@ naver.com">@naver.com</option>
+                            </select>
+                        </div>
+                        <div class="col-9">
+                            <label for="" class="form-label">ADDRESS</label>
+                            <input type="text" class="form-control" id="postCode" name="postCode" readonly>
+                        </div>
+                        <div class="col-3">
+                            <label for="search" class="form-label">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                            <button type="button" class="btn btn-outline-primary" value="Search" onclick="searchAddress()">Search</button>
+                        </div>
+                        <div class="col-12">
+                            <input type="text" class="form-control" id="memberAddr" name="memberAddr" readonly >
+                        </div>
+                        <div class="col-12">
+                            <input type="text" class="form-control" id="addrDetail" name="addrDetail">
+                        </div>
+                        <div class="col-12">
+                            <label for="gender" class="form-label">GENDER</label>                           
+                        </div>
+                        <div class="col-12">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="" value="MALE" checked>
+                            <label class="form-check-label" for="gender" >MALE</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="" value="FEMALE">
+                            <label class="form-check-label" for="gender">FEMALE</label>
+                          </div> 
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-primary" onclick="join()">Join</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/fragment/user_header.js"></script>
+
+</th:block>
+</html>

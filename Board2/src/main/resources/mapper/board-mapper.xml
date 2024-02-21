@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="boardMapper">
+    <resultMap id="board" type="com.green.Board2.vo.BoardVO">
+        <result column="BOARD_NUM"       property="boardNum"/>
+        <result column="TITLE"           property="title"/>
+        <result column="CONTENT"         property="content"/>
+        <result column="WRITER"          property="writer"/>
+        <result column="CREATE_DATE"     property="createDate"/>
+        <result column="READ_CNT"        property="readCnt"/>
+    </resultMap>
+    <!--게시글 등록-->
+    <insert id="insertBoard">
+        INSERT INTO BOARD (
+            TITLE
+            ,WRITER
+            ,CONTENT
+        ) VALUES (
+            #{title}
+            ,#{writer}
+            ,#{content}
+        )
+    </insert>
+<!--  게시글 조회  -->
+    <select id="selectBoardList" resultMap="board">
+        SELECT BOARD_NUM
+            ,TITLE
+            ,WRITER
+            ,CREATE_DATE
+            ,READ_CNT
+        FROM BOARD
+
+<!--                    searchVO.getSearchValue();-->
+        <if test= 'searchValue != null and !searchValue.equals("")'>
+            WHERE ${searchType} LIKE CONCAT('%', #{searchValue} , '%')
+        </if>
+        ORDER BY BOARD_NUM DESC
+        LIMIT ${displayDataCnt} OFFSET ${displayDataCnt * (nowPage - 1)}
+<!--    LIMIT (5)의 데이터를 OFFSET (5* (1P - 1)) = 5    -->
+<!--
+        $ : ''에 감싸져 있지 않음 컬럼 자체에는 $가 들어감
+        # : ''에 감싸져 있음 컬럼 자체가 아닐 경우 즉, 값일 경우에 #가 들어감
+     -->
+
+    </select>
+
+    <select id="selectBoardOne" resultMap="board">
+        SELECT
+            BOARD_NUM
+            ,TITLE
+            ,CONTENT
+            ,WRITER
+            ,CREATE_DATE
+            ,READ_CNT
+        FROM BOARD
+        WHERE BOARD_NUM = #{boardNum}
+    </select>
+
+    <delete id="deleteBoard">
+        DELETE FROM BOARD
+        WHERE BOARD_NUM = #{boardNum}
+    </delete>
+
+    <update id="updateBoard">
+        UPDATE BOARD
+        SET
+            TITLE = #{title}
+            ,CONTENT = #{content}
+        WHERE BOARD_NUM = #{boardNum}
+    </update>
+
+    <!--  조회수 증가  -->
+    <update id="updateReadCnt">
+        UPDATE BOARD
+        SET
+            READ_CNT = READ_CNT + 1
+        WHERE BOARD_NUM = #{boardNum}
+    </update>
+
+    <select id="selectBoardCnt" resultType="int">
+        SELECT COUNT (BOARD_NUM)
+        FROM BOARD
+    </select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

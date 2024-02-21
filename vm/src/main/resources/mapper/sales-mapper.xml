@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="salesMapper">
+    <resultMap id="sales" type="com.example.green.vm.sales.vo.SalesVO">
+        <id column="SALES_CODE" property="salesCode"/>
+        <result column="BUYER_NAME" property="buyerName"/>
+        <result column="BUYER_TEL" property="buyerTel"/>
+        <result column="COLOR" property="color"/>
+        <result column="BUY_DATE" property="buyDate"/>
+        <result column="CAR_CODE" property="carCode"/>
+    </resultMap>
+
+
+
+
+    <select id="selectBuyList" resultMap="sales">
+        SELECT
+            BUYER_NAME
+            ,BUYER_TEL
+            ,COLOR
+            ,CAR.CAR_CODE
+            ,CAR_NAME
+        FROM SALES_INFO SALES
+        INNER JOIN CAR_INFO CAR
+        ON SALES.CAR_CODE = CAR.CAR_CODE
+    </select>
+
+    <insert id="insertSalesInfo">
+        INSERT INTO SALES_INFO(
+            BUYER_NAME
+            ,BUYER_TEL
+            ,COLOR
+            ,CAR_CODE
+        ) VALUES(
+            #{buyerName}
+            ,#{buyerTel}
+            ,#{color}
+            ,#{carCode}
+        )
+    </insert>
+
+    <select id="selectBuyInfoList" resultMap="carMapper.car">
+        SELECT
+            CAR.CAR_CODE
+            ,BUYER_NAME
+            ,BUYER_TEL
+            ,COLOR
+            ,CAR_PRICE
+            ,CAR_NAME
+            ,SALES_CODE
+        FROM CAR_INFO CAR
+        INNER JOIN SALES_INFO SALES
+        ON CAR.CAR_CODE = SALES.CAR_CODE
+    </select>
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

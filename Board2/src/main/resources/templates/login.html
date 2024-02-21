@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+   <h3>login.html</h3>
+   <form action="/member/login" method="post">
+      id <input type="text" name="memberId"> <br>
+      pw <input type="password" name="memberPw"> <br>
+      <input type="button" value="게시글 보러가기" onclick="goBoardList()">
+      <input type="submit" value="로그인">
+      <input type="button" value="회원가입" onclick="goJoin()">
+   </form>
+   
+
+
+
+   <script>
+      function goJoin(){
+         location.href = '/member/joinForm';
+      }
+
+      function goBoardList(){
+         location.href = '/board/list';
+      }
+   </script>
+</body>
+</html>

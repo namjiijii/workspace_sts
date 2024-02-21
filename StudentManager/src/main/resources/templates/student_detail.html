@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+    <form action="" method="post">
+        <tr>
+            <td>학번</td>
+            <td>[[${stuInfo.stuNo}]]</td>
+            <td>이름</td>
+            <td>[[${stuInfo.stuName}]]</td>
+        </tr>
+        <tr>
+            <td>국어점수</td>
+            <td>[[${stuInfo.korScore}]]</td>
+            <td>영어점수</td>
+            <td>[[${stuInfo.engScore}]]</td>
+        </tr>
+        <tr>
+            <td>자기소개</td>
+            <td>[[${intro}]]</td>
+        </tr> <br>
+        
+        <input type="button" value="학생삭제" th:onclick="|location.href='@{/delete(stuNo=${stuInfo.stuNo})}'|">
+
+    </form>
+
+
+</body>
+</html>

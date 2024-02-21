@@ -1,0 +1,18 @@
+<!DOCTYPE html> 
+<!-- layout:decorate="~{fragment/layout}"이 파일은 fragment폴더 안의 layout.html과 
+    함께 열리는 것을 의미-->
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/layout}">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+    <th:block layout:fragment="contentFragment">
+        <h3>content_1.html 파일입니다.</h3>
+        <a href="/content2">content_2.html 파일로 이동</a>
+    </th:block>
+</body>
+</html>

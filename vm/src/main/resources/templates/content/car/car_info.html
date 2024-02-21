@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/car_layout}" >
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴때 같이 실행하는 css-->
+    <!-- <link rel="stylesheet" href="/"> -->
+</th:block>
+
+<th:block layout:fragment="contentFragment">
+    <!-- html 코드 작성-->
+    <div class="row" >
+        <div class="col text-center mt-3">
+            <tr>
+                <td>
+                    <h1>차량 관리 시스템</h1>
+                </td>
+            </tr>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="content_js">
+    <!--html 파일이 열릴때 같이 실행하는 js-->
+    <!-- <script src="/"></script> -->
+</th:block>
+</html>

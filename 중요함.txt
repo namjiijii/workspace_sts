@@ -1,0 +1,73 @@
+1. 이동하고자 하는 html로 갈때 쿼리 기능이 필요한지 판단
+2. 무조건 쿼리 작성 mapper.xml
+3. 작성한 쿼리를 실행시킬 메소드를 인터페이스에서 정의
+4. 인터페이스를 구현한 클래스에서 메소드를 구현
+5. controller의 메소드에서 쿼리 실행을 위해 만든 메소드를 호출
+
+
+
+SPRING
+좋은 개발 코드란
+결합도는 낮고 응집도는 높은 코드가 좋은 코드
+
+결합도를 낮추기 위해 적용한 개념
+1. IOC (Inversion Of Control)
+-제어의 역전 (객체를 만드는 주체가 역전)
+
+2. DI (Dependency Injection)
+-의존성 주입
+
+어떻게 spring이 객체를 만들게 코드를 구현하는가 ?
+1.스프링이 객체를 알아서 생성하려면 객체 생성이 필요한 클래스는 반드시 
+프로젝트의 기본 패키지 안에 생성해야 함. 
+2.기본 패키지 안에 생성된 클래스들을 쭉 둘러보면서 특정 어노테이션이
+붙어있는 클래스들의 객체를 자동으로 생성.
+
+
+ 클래스 위에 선언되어서 객체를 자동으로 생성하는 어노테이션
+1)@Component  2)@Controller  3)@Service  4)@Repository
+
+@Controller
+public class StuController{}
+->StuController stuController = new StuController;
+
+@Service
+public class StuServiceImpl{}
+-> StuServiceImpl stuServiceImpl = new StuServiceImpl
+
+3. 스프링이 자동으로 만들어준 객체를 우리가 어떻게 사용할 수 있는가(DI) ?
+- 스프링이 자동으로 만들어준 객체를 사용할 때도 어노테이션으로 사용
+  
+만들어진 객체를 사용하는 어노테이션
+1) @Autowired : 자료형을 기준으로 객체에 의존성 주입
+2) @Resource : 객체명을 기준으로 객체에 의존성 주입
+ex>---------------------------------------
+@Component
+class Aaa{} -> Aaa aaa = new Aaa();
+@Component
+class Bbb{} -> Bbb bbb = new Bbb();
+
+class Test{
+    @Autowired
+    private Aaa myAaa;
+    ->private Aaa myAaa = aaa;
+}
+ex2>---------------------------------------
+class Aaa{}
+
+@Component
+class Bbb extends Aaa{} ->Bbb bbb= new Bbb(); 
+@Component
+class Ccc extends Aaa{} ->Ccc ccc= new Ccc(); 
+
+@Component
+class Ddd {} ->Ddd ddd= new Ddd();
+
+class Eee{
+	@Resource(name = "bbb") -> bbb라는 이름의 객체로 의존성 주입
+	private Aaa aaa;
+}
+
+응집도를 높이기 위해 적용한 개념
+1. AOP (Aspected-Oriented Programing)
+-관점지향프로그램

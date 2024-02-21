@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/admin_layout}">
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴때 같이 실행하는 css-->
+    <!-- <link rel="stylesheet" href="/"> -->
+</th:block>
+
+<th:block layout:fragment="contentFragment">
+    <div class="row">
+        <div class="col-12">
+            <form action="/admin/adminHistory" method="post">
+                <table class="table table-borderless text-center align-middle">
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-2">
+                                    <select id="inputState" class="form-select" name="searchType">
+                                        <option value="BUY_CODE" th:selected="searchBuyVO.searchType == 'BUY_CODE'">구매번호</option>
+                                        <option value="MEMBER_ID" th:selected="searchBuyVO.searchType == 'MEMBER_ID'">구매자ID</option>
+                                    </select>
+                                </div>
+                                <div class="col-10">
+                                    <div class="input-group flex-nowrap">
+                                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchValue" th:value="${searchBuyVO.searchValue}">
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-2">
+                                    <span>구매일시</span>
+                                </div>
+                                <div class="col-8">
+                                    <div class="input-group flex-nowrap">
+                                        <span class="input-group-text" id="addon-wrapping">From</span>
+                                        <input type="date" class="form-control" aria-describedby="addon-wrapping" name="fromDate" th:value="${searchBuyVO.fromDate}">
+                                        <span class="input-group-text" id="addon-wrapping">To</span>
+                                        <input type="date" class="form-control" aria-describedby="addon-wrapping" name="toDate" th:value="${searchBuyVO.toDate}">
+                                    </div>
+                                </div>
+                                <div class="col d-grid">
+                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <table class="table table-hover text-center align-middle">
+                <colgroup>
+                    <col whidth="10%">
+                    <col whidth="10%">
+                    <col whidth="30%">
+                    <col whidth="30%">
+                    <col whidth="20%">
+                </colgroup>
+                <thead>
+                    <tr >
+                        <td>No</td>
+                        <td>구매번호</td>
+                        <td>구매자ID</td>
+                        <td>결제 금액</td>
+                        <td>구매일</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tbody-tr" th:each="vo , state : ${voList}" th:onclick="showModal([[${vo.buyCode}]])">
+                        <td>[[${#lists.size(voList) - state.index}]]</td>
+                        <td>[[${vo.buyCode}]]</td>
+                        <td>[[${vo.memberId}]]</td>
+                        <td>[[${#numbers.formatCurrency(vo.buyPrice)}]]</td>
+                        <td>[[${vo.buyDate}]]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    
+    <!-- Modal -->
+    <div class="modal fade modal-lg" id="buy-detail-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div><button type="button" class="btn-close" data-bs-dismiss="modal" style="float: right;" aria-label="Close"></button></div>
+                <div class="modal-header1">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" style="text-align: center; font-size: large; font-weight: bold;">
+                        구매 상세 내역
+                    </h1>
+                </div>
+                <div class="modal-body1 mt-3">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <table class="head-table table table-borderless text-center">
+                                        <colgroup>
+                                            <col width="20%">
+                                            <col width="30%">
+                                            <col width="20%">
+                                            <col width="30%">
+                                        </colgroup>
+                                        <tr>
+                                            <td>구매 번호</td>
+                                            <td></td>
+                                            <td>구매자ID</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>구매 금액</td>
+                                            <td></td>
+                                            <td>구매 일시</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <table class="table text-center">
+                                <colgroup>
+                                    <col width="20%">
+                                    <col width="30%">
+                                    <col width="20%">
+                                    <col width="30%">
+                                </colgroup>
+                                    <thead>
+                                        <tr style="font-weight: bold;">
+                                            <td>No</td>
+                                            <td>구매상품</td>
+                                            <td>수량</td>
+                                            <td>결제 금액</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-in-tbody">
+                                        <th:block>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>
+                                                    
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </th:block>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="content_js">
+    <!--html 파일이 열릴때 같이 실행하는 js-->
+    <script src="/js/content/admin/admin_history.js"></script>
+</th:block>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/admin_layout}" >
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴때 같이 실행하는 css-->
+    <!-- <link rel="stylesheet" href="/"> -->
+    <style>
+        .scrollBar{
+            /* overflow(범위를 벗어나든 벗어나지 않던 스크롤을 만들어줌): scroll; 
+            overflow(auto는 범위를 벗어나야지만 스크롤이 생김): auto; */
+            overflow-y: auto;
+            height: 750px;
+        }
+        .scrollBar::-webkit-scrollbar {
+            width: 10px;  /* 스크롤바의 너비 */
+        }
+
+        .scrollBar::-webkit-scrollbar-thumb {
+            height: 30%; /* 스크롤바의 길이 */
+            background: #217af4; /* 스크롤바의 색상 */
+            
+            border-radius: 10px;
+        }
+
+        .scrollBar::-webkit-scrollbar-track {
+            background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+        }
+    </style>
+</th:block>
+  
+<th:block layout:fragment="contentFragment">
+    <input type="hidden" th:value="${updateItemCode}" id="updateItemCode">
+    <!-- html 코드 작성-->
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col">
+                    <h3>상품 목록</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col scrollBar">
+                    <table class="table text-center table-hover">
+                        <colgroup>
+                            <col width="10%">
+                            <col width="20%">
+                            <col width="30%">
+                            <col width="20%">
+                            <col width="20%">
+                        </colgroup>
+                       
+                        <thead>
+                            <tr>
+                                <td>No</td>
+                                <td>상품코드</td>
+                                <td>상품명</td>
+                                <td>재고</td>
+                                <td>상태</td>
+                            </tr>
+                        </thead>
+                        <tbody class="pointer-span">
+                            <tr  th:each="item , state: ${itemList}" th:onclick="detailItem([[${item.itemCode}]])">
+                                <td>[[${#lists.size(itemList) - state.index}]]</td>
+                                <td>[[${item.itemCode}]]</td>
+                                <td>[[${item.itemName}]]</td>
+                                <td>[[${item.itemStock}]]</td>
+                                <td>[[${item.strStatus}]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 detail-div">
+
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="img-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <img src="">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="content_js">
+    <!--html 파일이 열릴때 같이 실행하는 js-->
+    <script src="/js/content/admin/admin_item.js"></script>
+</th:block>
+</html>

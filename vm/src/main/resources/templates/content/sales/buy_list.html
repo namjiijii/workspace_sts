@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/car_layout}" >
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴때 같이 실행하는 css-->
+    <!-- <link rel="stylesheet" href="/"> -->
+</th:block>
+
+<th:block layout:fragment="contentFragment">
+    <!-- html 코드 작성-->
+<div class="row justify-content-center">
+    <div class="col-10">
+        <table class="table text-center align-middle">
+            <div class="row">
+                <div class="col">
+                    <tr>
+                        <td rowspan="2">No</td>
+                        <td colspan="4">구매자 정보</td>
+                        <td colspan="2">차량 정보</td>
+                    </tr>
+                    <tr>
+                        <td>구매자명</td>
+                        <td>연락처</td>
+                        <td>구매일</td>
+                        <td>색상</td>
+                        <td>모델명</td>
+                        <td>금액</td>
+                    </tr>
+                    <tr th:each="buy : ${buyList}">
+                        <td></td>
+                        <td>[[${buy.SalesVO[0].buyerName}]]</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>[[${buy.carName}]]</td>
+                        <td>[[${buy.carPrice}]]</td>
+                    </tr>
+                </div>
+            </div>
+            
+        </table>
+
+    </div>
+</div>
+
+
+
+
+</th:block>
+
+<th:block layout:fragment="content_js">
+    <!--html 파일이 열릴때 같이 실행하는 js-->
+    <!-- <script src="/"></script> -->
+</th:block>
+</html>

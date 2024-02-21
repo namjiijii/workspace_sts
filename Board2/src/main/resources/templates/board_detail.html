@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>글 번호</td>
+            <td>[[${board.boardNum}]]</td>
+            <td>작성자</td>
+            <td>[[${board.writer}]]</td>
+            <td>작성일</td>
+            <td>[[${board.createDate}]]</td>
+            <td>조회수</td>
+            <td>[[${board.readCnt}]]</td>
+        </tr>
+        <tr>
+            <td>제목</td>
+            <td colspan="5">[[${board.title}]]</td>
+        </tr>
+        <tr>
+            <td>내용</td>
+            <td colspan="5">[[${board.content}]]</td>
+        </tr>
+    </table>
+            
+    <!-- 수정, 삭제 글 작성자이거나, 로그인한 사람이 관리자인 경우 -->
+    <input type="button" value="뒤로가기" onclick="goBack()">
+    
+    <th:block th:if="${session.loginInfo != null}">
+        <th:block th:if="${session.loginInfo.memberId == board.writer 
+                        or session.loginInfo.isAdmin == 'Y'}">
+            <input type="button" value="수정" th:onclick="|location.href='@{/board/boardUpdate(boardNum=${board.boardNum})}'|">
+            <input type="button" value="삭제" th:onclick="goDelete([[${board.boardNum}]])">
+        </th:block>
+    </th:block>
+    <div>
+        <form action="/reply/regReply" method="post">
+            <input type="hidden" name="boardNum" th:value="${board.boardNum}">
+            <input type="text" name="content">
+            <input type="submit" value="등록">
+        </form>
+    </div>
+    <div th:each="reply : ${replyList}">
+        <tr>
+            <td>[[${reply.writer}]]</td>
+            <td>[[${reply.createDate}]]</td>
+            <td>[[${reply.content}]]</td>
+            <td><input type="button" value="삭제" th:onclick="goReplyDelete([[${reply.replyNum}]],[[${reply.boardNum}]])"></td>
+        </tr>
+        
+    </div>
+
+        
+    
+
+    <!-- 뒤로가기 버튼은 -->
+    <!-- history.back(-1)과 location이 있다 -->
+    <!-- history.back은 새롭게 추가된 데이터가 안 보이게 된다.
+    즉 이 전에 있던 데이터 그대로 남아있고 새롭게 추가된 데이터는 나오지 않는다 -->
+    <!-- location은 데이터를 최신화를 시켜주고 다시 실행시켜줌(새로고침과 유사한 원리) -->
+    <script>
+        //변수 선언
+        var a; // 기존에 쓰던 변수 선언 문법
+        var aa = 10;
+        var bb = 'java';
+
+        //추천하는 방식
+        const b = 10;//변하지 않는 값을 저장할 때는 const 사용
+        // b = 20; 오류 발생 
+
+        let c = 10;//변하는 값을 저장할 때는 let을 사용
+        c = '문자열도 가능'
+
+        const name = '홍';
+        const num1 = 10;
+        const num2 = 20;
+        // console.log('안녕하세요');
+        // console.log(name + '이라는 사람은 국어 점수가' + num1 + '영어 점수가 ' + num2 + '입니다');
+        // //빽틱
+        // console.log(`${name}이라는 사람은 국어점수가${num1} 영어점수가${num2}입니다`);
+        //`홀따옴표와 동일한 기능이 있고${name}이렇게도 가능`
+        c = 20;
+        function goBack(){
+            location.href='/board/list';
+        }
+        //function goDelete(let boardnum){
+        //     location.href='';
+        // } 변수의 자료형(let)이 필요 없음 
+        function goDelete(boardNum){
+            location.href=`/board/boardDelete?boardNum=${boardNum}`;
+        }
+        
+        function goReplyDelete(replyNum, boardNum){
+            location.href=`/reply/deleteReply?replyNum=${replyNum}&${boardNum}`;
+        }
+
+    </script>
+</body>
+</html>
